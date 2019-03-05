@@ -1,0 +1,30 @@
+The most expensive listing is id# 24650875, name: FUll House Victorian: 7500 SqFt, 4 Floors, Hot tub. The price is 10,000. It is hosted by Sarah, the neighbourhood is Western Addition, the minimum number of nights is 2 and there are only 3 reviews for it. 
+
+select * from sfo_listings
+order by price desc
+
+
+First it is important to describe the metric by which we are judging ‘popularity’. For this purpose I will be looking at the number of reviews per neighbourhood. This can potential measure the amount of people which stay in certain neighbourhoods although it doesn’t record how the customer felt about the neighbourhood or if other customers just aren’t submitting reviews. According to the query below, Mission, Western Addition, and Castro/Upper Market are the three most popular neighbourhoods.
+
+select neighbourhood, sum(number_of_reviews)reviews from sfo_listings
+group by 1
+order by reviews desc    
+ 
+It seems like the cheapest times are october and november
+
+select extract(month from calender_date) months, avg(price) avg_price from status_abbreviated
+group by months
+order by avg_price
+
+
+select 
+	extract (month from sfo_calendar.calender_date) months, 
+	(case when available = 'f' then 'not available' else 'available' end) availability,
+	count(*) as number_of_available_rooms
+from 
+	sfo_calendar
+group by 1,2
+
+August, september and october seem to be the busiest months 
+
+
